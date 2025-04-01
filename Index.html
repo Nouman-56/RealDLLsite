@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html lang="en" xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Lucky Lottery</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --primary: #4a6bff;
+            --secondary: #ff6b6b;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+            --info: #17a2b8;
+            --dark: #343a40;
+            --light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #6c5ce7);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, var(--primary), #6c5ce7);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(74, 107, 255, 0.3);
+            margin: 10px 0;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(74, 107, 255, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), #fd79a8);
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #5cb85c);
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 6px 15px rgba(40, 167, 69, 0.4);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #f0ad4e);
+            box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
+        }
+        
+        .btn-warning:hover {
+            box-shadow: 0 6px 15px rgba(255, 193, 7, 0.4);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #d9534f);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
+        
+        .btn-danger:hover {
+            box-shadow: 0 6px 15px rgba(220, 53, 69, 0.4);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, var(--info), #5bc0de);
+            box-shadow: 0 4px 10px rgba(23, 162, 184, 0.3);
+        }
+        
+        .btn-info:hover {
+            box-shadow: 0 6px 15px rgba(23, 162, 184, 0.4);
+        }
+        
+        .note-box {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .note-box h2 {
+            color: var(--danger);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .timer-container {
+            background: linear-gradient(135deg, var(--dark), #343a40);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timer-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        #countdown {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        
+        .winners-list {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .winners-list h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .boost-task {
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        @media (min-width: 768px) {
+            .btn-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-btn:hover, .nav-btn.active {
+            background: linear-gradient(135deg, var(--primary), #6c5ce7);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Daily Lucky Lottery</h1>
+            <p class="subtitle">For the first time in Pakistan, win from 1 Rupee to 100,000 Rupees daily without any investment! Winning is guaranteed. Complete the task now and claim your prize directly in your Easypaisa or JazzCash!</p>
+            
+            <a href="#" class="btn btn-icon" id="main-task-btn">
+                <i class="fas fa-hand-pointer"></i> Click here to paste the link
+            </a>
+        </header>
+        
+        <div class="note-box">
+            <h2>Important Note</h2>
+            <p>After completing the task, carefully click on the button below and enter your details correctly. Those who enter incorrect details will not receive the prize money.</p>
+            
+            <a href="#" class="btn btn-secondary btn-icon" id="form-btn">
+                <i class="fas fa-file-alt"></i> Click here to paste Google Form link
+            </a>
+        </div>
+        
+        <div class="nav">
+            <button class="nav-btn active" data-page="home">Home</button>
+            <button class="nav-btn" data-page="winners">Daily Winners</button>
+            <button class="nav-btn" data-page="boost">Boost Your Task</button>
+            <button class="nav-btn" data-page="how-to">How to Perform Task</button>
+        </div>
+        
+        <!-- Home Page -->
+        <div class="page active" id="home">
+            <div class="timer-container">
+                <div class="timer-title">Next Draw In:</div>
+                <div id="countdown">24:00:00</div>
+            </div>
+        </div>
+        
+        <!-- Daily Winners Page -->
+        <div class="page" id="winners">
+            <div class="winners-list">
+                <h2>Today's Winners</h2>
+                <table id="winners-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Prize (Rs)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Winners will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Boost Your Task Page -->
+        <div class="page" id="boost">
+            <div class="note-box">
+                <h2>Boost Your Task</h2>
+                <p>Increase your chances of winning by completing these additional tasks. Each completed task will multiply your winning amount!</p>
+                
+                <div class="btn-grid">
+                    <a href="#" class="btn btn-success btn-icon" id="boost-btn-1">
+                        <i class="fas fa-bolt"></i> Click to paste Boost Task link
+                    </a>
+                    <a href="#" class="btn btn-warning btn-icon" id="boost-btn-2">
+                        <i class="fas fa-fire"></i> Click to paste Task 2 link
+                    </a>
+                    <a href="#" class="btn btn-info btn-icon" id="boost-btn-3">
+                        <i class="fas fa-tint"></i> Click to paste Task 3 link
+                    </a>
+                    <a href="#" class="btn btn-danger btn-icon" id="boost-btn-4">
+                        <i class="fas fa-wind"></i> Click to paste Task 4 link
+                    </a>
+                    <a href="#" class="btn btn-primary btn-icon" id="boost-btn-5">
+                        <i class="fas fa-mountain"></i> Click to paste Task 5 link
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- How to Perform Task Page -->
+        <div class="page" id="how-to">
+            <div class="note-box">
+                <h2>How to Perform Task</h2>
+                <p>Watch this video tutorial to learn how to complete the task and claim your prize:</p>
+                
+                <div class="video-container">
+                    <iframe id="tutorial-video" src="https://www.youtube.com/embed/" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            &copy; 2023 Daily Lucky Lottery. All rights reserved.
+        </footer>
+    </div>
+
+    <script>
+        // Countdown Timer
+        function startCountdown() {
+            let hours = 24;
+            let minutes = 0;
+            let seconds = 0;
+            
+            const countdownElement = document.getElementById('countdown');
+            
+            const timer = setInterval(() => {
+                seconds--;
+                
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                }
+                
+                if (minutes < 0) {
+                    minutes = 59;
+                    hours--;
+                }
+                
+                if (hours < 0) {
+                    clearInterval(timer);
+                    countdownElement.textContent = "00:00:00";
+                    // Refresh winners list when timer ends
+                    generateWinners();
+                    // Restart timer
+                    setTimeout(startCountdown, 5000);
+                    return;
+                }
+                
+                const formattedHours = hours.toString().padStart(2, '0');
+                const formattedMinutes = minutes.toString().padStart(2, '0');
+                const formattedSeconds = seconds.toString().padStart(2, '0');
+                
+                countdownElement.textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+            }, 1000);
+        }
+        
+        // Generate Random Winners
+        function generateWinners() {
+            const pakistaniNames = [
+                "Muhammad Ali", "Fatima Khan", "Ahmed Raza", "Ayesha Malik", "Usman Sheikh",
+                "Zainab Bibi", "Bilal Hussain", "Sana Akhtar", "Imran Shah", "Hina Aslam",
+                "Kamran Ahmed", "Sadia Iqbal", "Tariq Mahmood", "Nadia Khan", "Waqar Younis",
+                "Rabia Sultan", "Asif Ali", "Saima Javed", "Shahid Afridi", "Noreen Akbar",
+                "Faisal Iqbal", "Sara Hayat", "Haris Sohail", "Amina Khalid", "Zubair Ahmed",
+                "Khadija Malik", "Saad Mansoor", "Mehwish Tariq", "Adnan Sami", "Farah Naz",
+                "Nasir Jamshed", "Hira Mirza", "Salman Butt", "Aisha Siddiqui", "Junaid Khan",
+                "Maria Sharif", "Abdul Rehman", "Sobia Riaz", "Rizwan Akhtar", "Nida Dar",
+                "Shoaib Malik", "Sanam Jung", "Mohammad Hafeez", "Anam Tanveer", "Umar Gul",
+                "Sana Mir", "Azhar Ali", "Mahnoor Ali", "Younis Khan", "Ayesha Omer",
+                "Misbah-ul-Haq", "Hina Rabbani", "Shahid Khan", "Meera Syal", "Sarfraz Ahmed",
+                "Mawra Hocane", "Wahab Riaz", "Mahira Khan", "Mohammad Amir", "Humaima Malik",
+                "Fawad Alam", "Mehwish Hayat", "Saeed Ajmal", "Iman Ali", "Asad Shafiq",
+                "Ainy Jaffri", "Yasir Shah", "Momal Sheikh", "Babar Azam", "Urwa Hocane",
+                "Mohammad Irfan", "Sajal Aly", "Fakhar Zaman", "Ayeza Khan", "Shaheen Afridi",
+                "Maya Ali", "Hasan Ali", "Kubra Khan", "Imad Wasim", "Saba Qamar",
+                "Shadab Khan", "Mehak Manzoor", "Mohammad Nawaz", "Aiman Khan", "Faheem Ashraf",
+                "Sarah Khan", "Mohammad Abbas", "Zara Noor", "Haris Rauf", "Neelam Muneer",
+                "Mohammad Rizwan", "Hareem Farooq", "Imran Khan", "Minal Khan", "Asif Afridi",
+                "Areeba Habib", "Usman Qadir", "Arij Fatyma", "Haider Ali", "Saboor Aly"
+            ];
+            
+            const prizes = [20, 50, 100, 200, 1000];
+            const winnersTable = document.querySelector("#winners-table tbody");
+            winnersTable.innerHTML = "";
+            
+            for (let i = 0; i < 100; i++) {
+                const randomNameIndex = Math.floor(Math.random() * pakistaniNames.length);
+                const randomPrizeIndex = Math.floor(Math.random() * prizes.length);
+                
+                const name = pakistaniNames[randomNameIndex];
+                const prize = prizes[randomPrizeIndex];
+                
+                const row = document.createElement("tr");
+                
+                const nameCell = document.createElement("td");
+                nameCell.textContent = name;
+                
+                const prizeCell = document.createElement("td");
+                prizeCell.textContent = prize;
+                
+                const statusCell = document.createElement("td");
+                
+                // 10% chance to be a "Boost Task" winner
+                if (Math.random() < 0.1 && prize === 1000) {
+                    statusCell.innerHTML = '<span class="boost-task">Boost Task</span>';
+                }
+                
+                row.appendChild(nameCell);
+                row.appendChild(prizeCell);
+                row.appendChild(statusCell);
+                
+                winnersTable.appendChild(row);
+            }
+        }
+        
+        // Navigation between pages
+        function setupNavigation() {
+            const navButtons = document.querySelectorAll(".nav-btn");
+            const pages = document.querySelectorAll(".page");
+            
+            navButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const pageId = button.getAttribute("data-page");
+                    
+                    // Update active button
+                    navButtons.forEach(btn => btn.classList.remove("active"));
+                    button.classList.add("active");
+                    
+                    // Show selected page
+                    pages.forEach(page => {
+                        page.classList.remove("active");
+                        if (page.id === pageId) {
+                            page.classList.add("active");
+                        }
+                    });
+                });
+            });
+        }
+        
+        // Button link placeholders
+        function setupEditableButtons() {
+            const buttons = [
+                { id: "main-task-btn", defaultText: "Click here to paste the link" },
+                { id: "form-btn", defaultText: "Click here to paste Google Form link" },
+                { id: "boost-btn-1", defaultText: "Click to paste Boost Task link" },
+                { id: "boost-btn-2", defaultText: "Click to paste Task 2 link" },
+                { id: "boost-btn-3", defaultText: "Click to paste Task 3 link" },
+                { id: "boost-btn-4", defaultText: "Click to paste Task 4 link" },
+                { id: "boost-btn-5", defaultText: "Click to paste Task 5 link" }
+            ];
+            
+            buttons.forEach(buttonInfo => {
+                const button = document.getElementById(buttonInfo.id);
+                
+                // Check if there's a saved link in localStorage
+                const savedLink = localStorage.getItem(buttonInfo.id);
+                if (savedLink) {
+                    button.href = savedLink;
+                    button.innerHTML = button.innerHTML.replace(buttonInfo.defaultText, "Go to Task");
+                }
+                
+                button.addEventListener("click", (e) => {
+                    if (!button.href || button.href === "#") {
+                        e.preventDefault();
+                        const link = prompt(`Please paste the link for ${buttonInfo.defaultText}:`);
+                        if (link) {
+                            button.href = link;
+                            localStorage.setItem(buttonInfo.id, link);
+                            button.innerHTML = button.innerHTML.replace(buttonInfo.defaultText, "Go to Task");
+                        }
+                    }
+                });
+            });
+            
+            // Video link setup
+            const videoIframe = document.getElementById("tutorial-video");
+            const savedVideoLink = localStorage.getItem("tutorial-video");
+            if (savedVideoLink) {
+                videoIframe.src = `https://www.youtube.com/embed/${savedVideoLink.split(
